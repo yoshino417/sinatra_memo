@@ -19,12 +19,11 @@ def write_file(memos)
 end
 
 before do
-  @memos = []
-  @memos = read_file
+  @memos = read_file.nil? ? [] : read_file
 end
 
 get '/' do
-  @title = 'メモアプリ'
+  @title = 'メモアプリTop'
   erb :index
 end
 
@@ -40,7 +39,7 @@ post '/add' do
 end
 
 get '/show/:id' do
-  @title = "メモ#{params[:id]}"
+  @title = "メモ#{params[:id]}詳細"
   @memo_id = params[:id].to_i
   erb :show
 end
