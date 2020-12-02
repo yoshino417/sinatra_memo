@@ -1,0 +1,14 @@
+  <form class="add-memo" action="add" method="GET">
+    <input class="add-button" type="submit" value="追加">
+  </form>
+  <div class="memo-section">
+    <ul class="memo-ul">
+      <% unless @memos.nil? %>
+      <% @memos.each_with_index do |memo, i| %>
+      <li class="memo-li">
+        <a href=<%= "/show/#{i}" %>><%= memo["title"] %></a>
+      </li>
+      <% end %>
+      <% end %>
+    </ul>
+  </div>

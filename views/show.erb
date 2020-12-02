@@ -1,0 +1,13 @@
+<div class="show-block">
+  <p class="show-memo-title"><span><%= "< #{@memos[@memo_id]["title"]} >" %></span></p>
+  <p class="show-memo-content"><%= "#{@memos[@memo_id]["content"].gsub("\r\n", "<br>").gsub(" ", "&nbsp;")}" %></p>
+</div>
+<div class="form-buttons">
+  <form class="action-memo" action=<%= %"/edit/#{@memo_id}" %> method="GET">
+    <input class="form-button" type="submit" value="変更">
+  </form>
+  <form class="action-memo" action=<%= %"/delete/#{@memo_id}" %> method="POST">
+    <input type="hidden" name="_method" value="DELETE">
+    <input class="form-button" type="submit" value="削除">
+  </form>
+</div>
