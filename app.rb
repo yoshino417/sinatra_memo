@@ -2,14 +2,12 @@
 
 require  'sinatra'
 require  'sinatra/reloader'
-require 'json'
+require  'json'
 
 def read_file
-  memos = []
-  File.open('data.json') do |file|
-    memos = JSON.load(file)
+  File.open('data.json', 'r') do |file|
+    JSON.parse(file.read)
   end
-  memos
 end
 
 def write_file(memos)
@@ -19,7 +17,7 @@ def write_file(memos)
 end
 
 before do
-  @memos = read_file.nil? ? [] : read_file
+  @memos = read_file
 end
 
 get '/' do
@@ -39,7 +37,7 @@ post '/add' do
 end
 
 get '/show/:id' do
-  @title = "メモ#{params[:id]}詳細"
+  @title = "メモ#{params[:id]}"
   @memo_id = params[:id].to_i
   erb :show
 end
