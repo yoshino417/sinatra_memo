@@ -4,11 +4,13 @@
   <div class="memo-section">
     <ul class="memo-ul">
       <% unless @memos.nil? %>
-      <% @memos.each_with_index do |memo, i| %>
-      <li class="memo-li">
-        <a href=<%= "/show/#{i}" %>><%= memo["title"] %></a>
-      </li>
-      <% end %>
+        <% @memos.each_with_index do |memo, i| %>
+        <% if memo['title'].nil? then next end %>
+          <li class="memo-li">
+            <a href=<%= "/show/#{i}" %>><%= memo['title'] %></a>
+          </li>
+        <% end %>
+        <%#= @memos %>
       <% end %>
     </ul>
   </div>

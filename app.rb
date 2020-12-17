@@ -3,6 +3,7 @@
 require  'sinatra'
 require  'sinatra/reloader'
 require  'json'
+require  'cgi/escape'
 
 def read_file
   File.open('data.json', 'r') do |file|
@@ -31,7 +32,7 @@ get '/add' do
 end
 
 post '/add' do
-  @memos << { 'title' => params[:title], 'content' => params[:content] }
+  @memos << { 'title' => CGI.escapeHTML(params[:title]), 'content' => CGI.escapeHTML(params[:content]) }
   write_file(@memos)
   redirect '/'
 end
@@ -39,23 +40,23 @@ end
 get '/show/:id' do
   @title = "メモ#{params[:id]}"
   @memo_id = params[:id].to_i
-  erb :show
+  @memos[params[:id].to_i] == {} ? (redirect '/') : (erb :show)
 end
 
 get '/edit/:id' do
   @title = 'メモ編集'
-  erb :edit
+  @memos[params[:id].to_i] == {} ? (redirect '/') : (erb :edit)
 end
 
 patch '/edit/patch/:id' do
-  @memos[params[:id].to_i]['title'] = params[:title]
-  @memos[params[:id].to_i]['content'] = params[:content]
+  @memos[params[:id].to_i]['title'] = CGI.escapeHTML(params[:title])
+  @memos[params[:id].to_i]['content'] = CGI.escapeHTML(params[:content])
   write_file(@memos)
   redirect '/'
 end
 
 delete '/delete/:id' do
-  @memos.delete_at(params[:id].to_i)
+  @memos[params[:id].to_i] = {}
   write_file(@memos)
   redirect '/'
 end
