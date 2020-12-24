@@ -1,9 +1,9 @@
 <form class="save-memo" action=<%= "patch/#{params[:id]}" %> method="POST">
   <div class="title-block">
-    <input class="title-input" required type="text" name="title" value=<%= "#{@memos[params[:id].to_i]["title"]}" %>>
+    <input class="title-input" required type="text" name="title" value=<%= "#{@memos[@memo_index]["title"]}" %>>
   </div>
   <div class="text-block">
-    <textarea class="text-input" required name="content"><%= "#{@memos[params[:id].to_i]["content"]}" %></textarea>
+    <textarea class="text-input" required name="content"><%= "#{@memos[@memo_index]["content"]}" %></textarea>
   </div>
   <input type="hidden" name="_method" value="PATCH">
   <div>
